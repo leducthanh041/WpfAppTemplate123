@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfAppTemplate.ViewModels;
 
 namespace WpfAppTemplate.Views
 {
@@ -19,9 +20,10 @@ namespace WpfAppTemplate.Views
     /// </summary>
     public partial class CapNhatDaiLyWindow : Window
     {
-        public CapNhatDaiLyWindow()
+        public CapNhatDaiLyWindow(CapNhatDaiLyViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

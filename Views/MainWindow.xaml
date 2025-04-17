@@ -5,10 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="1536"
-    Height="960"
     Background="#FFFFFF"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    WindowState="Maximized"
+    ContentRendered="Window_ContentRendered">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
@@ -278,7 +278,7 @@
                             Width="170"
                             Height="40"
                             Background="#00AAFF"
-                            Command="{Binding OpenHoSoDaiLyCommand}"
+                            Command="{Binding TiepNhanDaiLyCommand}"
                             Content="➕ Tiếp nhận đại lý"
                             FontFamily="Roboto"
                             FontSize="16"
