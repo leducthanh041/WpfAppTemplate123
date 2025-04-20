@@ -9,7 +9,7 @@ namespace WpfAppTemplate.Services
 {
     public interface IQuanService
     {
-        Task<Quan> GetQuanById(int id);
+        //Task<Quan> GetQuanById(int id);
         Task<IEnumerable<Quan>> GetAllQuan();
         //Task AddQuan(Quan quan);
         //Task UpdateQuan(Quan quan);

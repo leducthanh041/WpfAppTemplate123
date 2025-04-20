@@ -24,13 +24,13 @@ namespace WpfAppTemplate.Repositories
             }
         }
 
-        public async Task<Quan> GetQuanById(int id)
-        {
-            Quan? quan = await _context.DsQuan
-                            .Include(q => q.DsDaiLy)
-                            .FirstOrDefaultAsync(q => q.MaQuan == id);
-            return quan ?? throw new Exception("Quan not found!");
-        }
+        //public async Task<Quan> GetQuanById(int id)
+        //{
+        //    Quan? quan = await _context.DsQuan
+        //                    .Include(q => q.DsDaiLy)
+        //                    .FirstOrDefaultAsync(q => q.MaQuan == id);
+        //    return quan ?? throw new Exception("Quan not found!");
+        //}
 
         public async Task<IEnumerable<Quan>> GetAllQuan()
         {

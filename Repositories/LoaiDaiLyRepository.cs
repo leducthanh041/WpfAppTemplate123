@@ -46,11 +46,11 @@ namespace WpfAppTemplate.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddLoaiDaiLy(LoaiDaiLy loaiDaiLy)
-        {
-            _context.DsLoaiDaiLy.Add(loaiDaiLy);
-            await _context.SaveChangesAsync();
-        }
+        //public async Task AddLoaiDaiLy(LoaiDaiLy loaiDaiLy)
+        //{
+        //    _context.DsLoaiDaiLy.Add(loaiDaiLy);
+        //    await _context.SaveChangesAsync();
+        //}
 
 
         //public async Task UpdateLoaiDaiLy(LoaiDaiLy loaiDaiLy)
@@ -69,10 +69,10 @@ namespace WpfAppTemplate.Repositories
         //    }
         //}
         
-        public async Task<int> GenerateAvailableId()
-        {
-            int maxId = await _context.DsLoaiDaiLy.MaxAsync(d => d.MaLoaiDaiLy);
-            return maxId + 1;
-        }
+        //public async Task<int> GenerateAvailableId()
+        //{
+        //    int maxId = await _context.DsLoaiDaiLy.MaxAsync(d => d.MaLoaiDaiLy);
+        //    return maxId + 1;
+        //}
     }
 }
