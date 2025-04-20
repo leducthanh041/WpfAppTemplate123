@@ -25,9 +25,35 @@ namespace WpfAppTemplate.Repositories
             }
         }
 
+
+        public async Task<DaiLy> GetDaiLyById(int id)
+        {
+            DaiLy? existingDaiLy = await _context.DsDaiLy
+                                            .Include(d => d.LoaiDaiLy)
+                                            .Include(d => d.Quan)
+                                            .FirstOrDefaultAsync(d => d.MaDaiLy == id);
+            return existingDaiLy ?? throw new Exception("DaiLy not found!");
+        }
+
+
+        public async Task<IEnumerable<DaiLy>> GetAllDaiLy()
+        {
+            return await _context.DsDaiLy
+                .Include(d => d.LoaiDaiLy)
+                .Include(d => d.Quan)
+                .ToListAsync();
+        }
+
         public async Task AddDaiLy(DaiLy daiLy)
         {
             _context.DsDaiLy.Add(daiLy);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task UpdateDaiLy(DaiLy daiLy)
+        {
+            _context.Entry(daiLy).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
@@ -41,34 +67,13 @@ namespace WpfAppTemplate.Repositories
             }
         }
 
-        public async Task<IEnumerable<DaiLy>> GetAllDaiLy()
-        {
-            return await _context.DsDaiLy
-                .Include(d => d.LoaiDaiLy)
-                .Include(d => d.Quan)
-                .ToListAsync();
-        }
 
-        public async Task<DaiLy> GetDaiLyById(int id)
-        {
-            DaiLy? existingDaiLy = await _context.DsDaiLy
-                                            .Include(d => d.LoaiDaiLy)
-                                            .Include(d => d.Quan)
-                                            .FirstOrDefaultAsync(d => d.MaDaiLy == id);
-            return existingDaiLy ?? throw new Exception("DaiLy not found!");
-        }
+        //public async Task<DaiLy> GetDaiLyByTenDaiLy(string tenDaiLy)
+        //{
+        //    DaiLy? daiLy = await _context.DsDaiLy.FirstAsync(d => d.TenDaiLy == tenDaiLy);
+        //    return daiLy ?? throw new Exception("DaiLy not found!");
+        //}
 
-        public async Task<DaiLy> GetDaiLyByTenDaiLy(string tenDaiLy)
-        {
-            DaiLy? daiLy = await _context.DsDaiLy.FirstAsync(d => d.TenDaiLy == tenDaiLy);
-            return daiLy ?? throw new Exception("DaiLy not found!");
-        }
-
-        public async Task UpdateDaiLy(DaiLy daiLy)
-        {
-            _context.Entry(daiLy).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
 
         public async Task<int> GenerateAvailableId()
         {

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using WpfAppTemplate.Models;
+using WpfAppTemplate.Services;
+using WpfAppTemplate.Commands;
 using WpfAppTemplate.Views;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
-using System.Runtime.CompilerServices;
-using WpfAppTemplate.Services;
-using System.Collections.ObjectModel;
-using WpfAppTemplate.Models;
-using WpfAppTemplate.Commands;
 
 namespace WpfAppTemplate.ViewModels
 {
@@ -34,12 +29,17 @@ namespace WpfAppTemplate.ViewModels
             LoadDataCommand = new RelayCommand(async () => await LoadDataExecute());
             TiepNhanDaiLyCommand = new RelayCommand(OpenTiepNhanDaiLyWindow);
             EditDaiLyCommand = new RelayCommand(OpenCapNhatDaiLyWindow);
+            DeleteDaiLyCommand = new RelayCommand(OpenXoaDaiLyWinDow);
+
 
             _serviceProvider = serviceProvider;
             _capNhatDaiLyFactory = capNhatDaiLyFactory;
         }
 
+        // Properties for binding
         private ObservableCollection<DaiLy> _danhSachDaiLy = [];
+        private DaiLy _selectedDaiLy = new();
+
         public ObservableCollection<DaiLy> DanhSachDaiLy
         {
             get => _danhSachDaiLy;
@@ -50,7 +50,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private DaiLy _selectedDaiLy = new();
         public DaiLy SelectedDaiLy
         {
             get => _selectedDaiLy;
@@ -71,6 +70,7 @@ namespace WpfAppTemplate.ViewModels
         public ICommand LoadDataCommand { get; }
         public ICommand TiepNhanDaiLyCommand { get; }
         public ICommand EditDaiLyCommand { get; }
+        public ICommand DeleteDaiLyCommand { get; }
 
         private async Task LoadDataExecute()
         {
@@ -111,6 +111,35 @@ namespace WpfAppTemplate.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening edit window: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void OpenXoaDaiLyWinDow()
+        {
+            if (string.IsNullOrEmpty(SelectedDaiLy.TenDaiLy))
+            {
+                MessageBox.Show("Vui lòng chọn đại lý để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                var result = MessageBox.Show(
+                    $"Bạn có chắc chắn muốn xóa đại lý '{SelectedDaiLy.TenDaiLy}'?",
+                    "Xác nhận xóa",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    await _daiLyService.DeleteDaiLy(SelectedDaiLy.MaDaiLy);
+                    await LoadData();
+                    MessageBox.Show("Đã xóa đại lý thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không thể xóa đại lý: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

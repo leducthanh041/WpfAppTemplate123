@@ -30,8 +30,7 @@ namespace WpfAppTemplate.Extensions
             
             // Đăng ký viewmodels
             services.AddTransient<ViewModels.MainWindowViewModel>();
-            services.AddTransient<ViewModels.CapNhatDaiLyViewModel>();
-            services.AddTransient<ViewModels.TiepNhanDaiLyViewModel>();
+            
             services.AddTransient<Func<int, CapNhatDaiLyViewModel>>(sp => dailyId =>
             new CapNhatDaiLyViewModel(
                 sp.GetRequiredService<IDaiLyService>(),
@@ -40,6 +39,7 @@ namespace WpfAppTemplate.Extensions
                 dailyId
             )
         );
+            services.AddTransient<ViewModels.TiepNhanDaiLyViewModel>();
 
             return services;
         }

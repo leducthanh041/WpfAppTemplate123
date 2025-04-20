@@ -44,6 +44,17 @@ namespace WpfAppTemplate.ViewModels
 
         // Properties for binding
         private string _maDaiLy = string.Empty;
+        private string _tenDaiLy = string.Empty;
+        private string _soDienThoai = string.Empty;
+        private string _email = string.Empty;
+        private DateTime _ngayTiepNhan;
+        private string _diaChi = string.Empty;
+        private LoaiDaiLy _selectedLoaiDaiLy = new();
+        private Quan _selectedQuan = new();
+        private ObservableCollection<LoaiDaiLy> _loaiDaiLies = [];
+        private ObservableCollection<Quan> _quans = [];
+
+
         public string MaDaiLy
         {
             get => _maDaiLy;
@@ -53,8 +64,7 @@ namespace WpfAppTemplate.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private string _tenDaiLy = string.Empty;
+        
         public string TenDaiLy
         {
             get => _tenDaiLy;
@@ -65,7 +75,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private string _soDienThoai = string.Empty;
         public string SoDienThoai
         {
             get => _soDienThoai;
@@ -76,7 +85,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private string _email = string.Empty;
         public string Email
         {
             get => _email;
@@ -87,7 +95,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private DateTime _ngayTiepNhan;
         public DateTime NgayTiepNhan
         {
             get => _ngayTiepNhan;
@@ -98,7 +105,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private string _diaChi = string.Empty;
         public string DiaChi
         {
             get => _diaChi;
@@ -109,7 +115,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private LoaiDaiLy _selectedLoaiDaiLy = new();
         public LoaiDaiLy SelectedLoaiDaiLy
         {
             get => _selectedLoaiDaiLy;
@@ -120,7 +125,6 @@ namespace WpfAppTemplate.ViewModels
             }
         }
 
-        private Quan _selectedQuan = new();
         public Quan SelectedQuan
         {
             get => _selectedQuan;
@@ -130,8 +134,7 @@ namespace WpfAppTemplate.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private ObservableCollection<LoaiDaiLy> _loaiDaiLies = [];
+        
         public ObservableCollection<LoaiDaiLy> LoaiDaiLies
         {
             get => _loaiDaiLies;
@@ -141,8 +144,7 @@ namespace WpfAppTemplate.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private ObservableCollection<Quan> _quans = [];
+        
         public ObservableCollection<Quan> Quans
         {
             get => _quans;
@@ -207,6 +209,24 @@ namespace WpfAppTemplate.ViewModels
             if (string.IsNullOrEmpty(SelectedLoaiDaiLy.TenLoaiDaiLy) || string.IsNullOrEmpty(SelectedQuan.TenQuan))
             {
                 MessageBox.Show("Vui lòng chọn loại đại lý và quận!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(SoDienThoai))
+            {
+                MessageBox.Show("Số điện thoại không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(Email))
+            {
+                MessageBox.Show("Email không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(DiaChi))
+            {
+                MessageBox.Show("Địa chỉ không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
